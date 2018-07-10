@@ -1,0 +1,31 @@
+{
+  "configs":[
+    {
+      "name":"Test Endpoint 1",
+      "pattern":"/test/:path",
+      "whiteListEnabled": false,
+      "roundRobinEnabled":true,
+      "targets":[
+        {
+          "host":"127.0.0.1",
+          "port":9081,
+          "httpType":"http"
+        },
+        {
+          "host":"127.0.0.1",
+          "port":9082,
+          "httpType":"http"
+        },
+        {
+          "host":"127.0.0.1",
+          "port":9083,
+          "httpType":"http"
+        }
+      ],
+      "globalRateLimit": 10,
+      "globalRateLimitUnit":"SECONDS",
+      "userRateLimit":10,
+      "userRateLimitUnit":"SECONDS"
+    }
+  ]
+}

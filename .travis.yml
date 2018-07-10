@@ -4,6 +4,7 @@ install: true
 script:
   - mvn clean install
   - mvn cobertura:cobertura
+  - "mvn sonar:sonar -Dsonar.organization=pardhasm-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=b0e3a6e8594edba029f0b59c7828b61289f5df8b"
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

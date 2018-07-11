@@ -5,7 +5,6 @@ import io.undertow.server.handlers.proxy.ProxyHandler;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -72,8 +71,8 @@ public class APIDefinition {
         return name;
     }
 
-    public ArrayList<Target> getTargets() {
-        return (ArrayList<Target>) targets;
+    public List<Target> getTargets() {
+        return targets;
     }
 
     public Long getGlobalRateLimit() {

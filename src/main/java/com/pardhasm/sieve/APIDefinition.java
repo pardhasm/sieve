@@ -105,19 +105,14 @@ public class APIDefinition {
         }
     }
 
-    static class Target {
+    public static class Target {
         HttpType httpType;
         String host;
         String port;
 
-        public Target(String httpType, String host, String port) {
-            this.httpType = HttpType.valueOf(httpType);
-            this.host = host;
-            this.port = port;
-        }
 
         public Target(Map params) {
-            this.httpType = HttpType.valueOf(String.valueOf(params.get("httpType")));
+            this.httpType = HttpType.valueOf(String.valueOf(params.get("httpType")).toUpperCase());
             this.host = String.valueOf(params.get("host"));
             this.port = String.valueOf(params.get("port"));
         }

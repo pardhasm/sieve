@@ -18,6 +18,7 @@ public enum APIConfigLoader {
 
     public void init() throws IOException, URISyntaxException {
         loadConfig();
+        Server.INSTANCE.start();
     }
 
     public void loadConfig() throws IOException, URISyntaxException {

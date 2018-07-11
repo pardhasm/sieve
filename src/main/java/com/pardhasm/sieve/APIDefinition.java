@@ -62,6 +62,56 @@ public class APIDefinition {
         return proxyHandler;
     }
 
+    public static String removeSlashesAtBothEnds(String path) {
+        checkNotNull(path);
+
+        if (path.isEmpty()) {
+            return path;
+        }
+
+        int beginIndex = 0;
+        while (beginIndex < path.length() && path.charAt(beginIndex) == '/') {
+            beginIndex++;
+        }
+        if (beginIndex == path.length()) {
+            return "";
+        }
+
+        int endIndex = path.length() - 1;
+        while (endIndex > beginIndex && path.charAt(endIndex) == '/') {
+            endIndex--;
+        }
+        return path.substring(beginIndex, endIndex + 1);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<Target> getTargets() {
+        return targets;
+    }
+
+    public Long getGlobalRateLimit() {
+        return globalRateLimit;
+    }
+
+    public TimeUnit getGlobalRateLimitUnit() {
+        return globalRateLimitUnit;
+    }
+
+    public Long getUserRateLimit() {
+        return userRateLimit;
+    }
+
+    public TimeUnit getUserRateLimitUnit() {
+        return userRateLimitUnit;
+    }
+
+    public LoadBalancingProxyClient getLoadBalancer() {
+        return loadBalancer;
+    }
+
     public static class Builder {
         private String name;
         private Pattern pattern;
@@ -235,26 +285,8 @@ public class APIDefinition {
         return java.util.regex.Pattern.compile(sb.toString());
     }
 
-    private static String removeSlashesAtBothEnds(String path) {
-        checkNotNull(path);
-
-        if (path.isEmpty()) {
-            return path;
-        }
-
-        int beginIndex = 0;
-        while (beginIndex < path.length() && path.charAt(beginIndex) == '/') {
-            beginIndex++;
-        }
-        if (beginIndex == path.length()) {
-            return "";
-        }
-
-        int endIndex = path.length() - 1;
-        while (endIndex > beginIndex && path.charAt(endIndex) == '/') {
-            endIndex--;
-        }
-        return path.substring(beginIndex, endIndex + 1);
+    public ProxyHandler getProxyHandler() {
+        return proxyHandler;
     }
 
     public static <T> T checkNotNull(T reference) {

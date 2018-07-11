@@ -5,15 +5,14 @@ import io.undertow.Undertow;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 public class SieveApplication {
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
-        APIConfigLoader.instance.init();
-        Server.instance.start();
-        test();
+    public static void main(String[] args) {
+//        APIConfigLoader.instance.init();
+//        Server.instance.start();
+//        test();
+
     }
 
     private static void test() {
@@ -21,7 +20,7 @@ public class SieveApplication {
                 .addHttpListener(9081, "localhost")
                 .setHandler(new HttpHandler() {
                     @Override
-                    public void handleRequest(HttpServerExchange exchange) throws Exception {
+                    public void handleRequest(HttpServerExchange exchange) {
                         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
                         exchange.getResponseSender().send("Server1");
                     }
@@ -33,7 +32,7 @@ public class SieveApplication {
                 .addHttpListener(9082, "localhost")
                 .setHandler(new HttpHandler() {
                     @Override
-                    public void handleRequest(HttpServerExchange exchange) throws Exception {
+                    public void handleRequest(HttpServerExchange exchange) {
                         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
                         exchange.getResponseSender().send("Server2");
                     }
@@ -45,7 +44,7 @@ public class SieveApplication {
                 .addHttpListener(9083, "localhost")
                 .setHandler(new HttpHandler() {
                     @Override
-                    public void handleRequest(HttpServerExchange exchange) throws Exception {
+                    public void handleRequest(HttpServerExchange exchange) {
                         exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
                         exchange.getResponseSender().send("Server3");
                     }

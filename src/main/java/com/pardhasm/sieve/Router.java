@@ -4,10 +4,10 @@ import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 
 public enum Router {
-    instance;
+    INSTANCE;
 
     public void handle(HttpServerExchange exchange) throws Exception {
-        APIDefinition definition = CacheManager.instance.get(exchange.getRequestPath());
+        APIDefinition definition = CacheManager.INSTANCE.get(exchange.getRequestPath());
         if(definition != null){
             definition.proxyHandler().handleRequest(exchange);
         }else{

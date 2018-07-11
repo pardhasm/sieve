@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 public enum CacheManager {
-    instance;
+    INSTANCE;
 
     private final Cache<Pattern, APIDefinition> cache = Caffeine.newBuilder()
             .expireAfterAccess(1000, TimeUnit.DAYS)

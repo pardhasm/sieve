@@ -9,10 +9,11 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public enum APIConfigLoader {
-    instance;
+    INSTANCE;
 
 
     public void init() throws IOException, URISyntaxException {
@@ -31,7 +32,7 @@ public enum APIConfigLoader {
                     Any config = JsonIterator.deserialize(content);
                     for(Any conf : config.get("configs").asList()){
                         APIDefinition apiDefinition = parseConfig(conf);
-                        CacheManager.instance.put(apiDefinition.getPattern(), apiDefinition);
+                        CacheManager.INSTANCE.put(apiDefinition.getPattern(), apiDefinition);
                     }
                 }
             }
@@ -51,7 +52,7 @@ public enum APIConfigLoader {
                 .targets(parseTargets(config)).build();
     }
 
-    private ArrayList<APIDefinition.Target> parseTargets(Any config) {
+    private List<APIDefinition.Target> parseTargets(Any config) {
         ArrayList<APIDefinition.Target> list = new ArrayList<>();
         for (Any p : config.get("targets").asList()) {
             list.add(new APIDefinition.Target(p.asMap()));

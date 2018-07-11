@@ -92,9 +92,6 @@ public class APIDefinition {
         return userRateLimitUnit;
     }
 
-    public LoadBalancingProxyClient getLoadBalancer() {
-        return loadBalancer;
-    }
 
     public enum HttpType {
         HTTP("http"), HTTPS("https");
@@ -103,11 +100,10 @@ public class APIDefinition {
         HttpType(String value) {
             this.value = value;
         }
-    }
 
-
-    public enum Health {
-        ACTIVE, SLOW, DEAD
+        public String getValue() {
+            return value;
+        }
     }
 
     static class Target {
@@ -197,6 +193,8 @@ public class APIDefinition {
             globalRateLimitUnit = prototype.globalRateLimitUnit;
             userRateLimit = prototype.userRateLimit;
             userRateLimitUnit = prototype.userRateLimitUnit;
+            loadBalancer = prototype.loadBalancer;
+            build = prototype.proxyHandler;
             return this;
         }
 
@@ -221,9 +219,6 @@ public class APIDefinition {
         }
     }
 
-    public ProxyHandler getProxyHandler() {
-        return proxyHandler;
-    }
 
     public static <T> T checkNotNull(T reference) {
         if (reference == null) {

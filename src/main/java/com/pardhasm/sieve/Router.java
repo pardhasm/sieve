@@ -11,9 +11,7 @@ public enum Router {
         if(definition != null){
             definition.proxyHandler().handleRequest(exchange);
         }else{
-            exchange.setStatusCode(404);
-            exchange.getResponseHeaders().put(
-                    Headers.CONTENT_TYPE, "text/plain");
+            exchange.setStatusCode(404).getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
             exchange.getResponseSender().send("Request URL not found");
         }
     }

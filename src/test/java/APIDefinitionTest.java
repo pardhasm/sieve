@@ -16,8 +16,6 @@ public class APIDefinitionTest {
         APIDefinition build = new APIDefinition.Builder()
                 .name("name")
                 .pattern("pattern")
-                .whiteListEnabled(true)
-                .isRoundRobinEnabled(true)
                 .globalRateLimit(1)
                 .globalRateLimitUnit(TimeUnit.valueOf("SECONDS"))
                 .userRateLimit(1)
@@ -32,6 +30,7 @@ public class APIDefinitionTest {
         assertNotNull(build.getUserRateLimitUnit());
         assertNotNull(build.getUserRateLimit());
 
+
     }
 
 
@@ -40,8 +39,6 @@ public class APIDefinitionTest {
         APIDefinition build = new APIDefinition.Builder()
                 .name("name")
                 .pattern("pattern")
-                .whiteListEnabled(true)
-                .isRoundRobinEnabled(true)
                 .globalRateLimit(1)
                 .globalRateLimitUnit(TimeUnit.valueOf("SECONDS"))
                 .userRateLimit(1)
@@ -57,8 +54,6 @@ public class APIDefinitionTest {
         APIDefinition build = new APIDefinition.Builder()
                 .name("name")
                 .pattern("pattern")
-                .whiteListEnabled(true)
-                .isRoundRobinEnabled(true)
                 .globalRateLimit(1)
                 .globalRateLimitUnit(TimeUnit.valueOf("SECONDS"))
                 .userRateLimit(1)

@@ -43,8 +43,6 @@ public enum APIConfigLoader {
         return new APIDefinition.Builder()
                 .name(config.get("name").toString())
                 .pattern(config.get("pattern").toString())
-                .whiteListEnabled(config.get("whiteListEnabled").toBoolean())
-                .isRoundRobinEnabled(config.get("roundRobinEnabled").toBoolean())
                 .globalRateLimit(config.get("globalRateLimit").toLong())
                 .globalRateLimitUnit(TimeUnit.valueOf(config.get("globalRateLimitUnit").toString()))
                 .userRateLimit(config.get("userRateLimit").toLong())

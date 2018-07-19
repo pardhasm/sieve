@@ -30,9 +30,10 @@ public class Server {
         List<Undertow.ListenerInfo> listenerInfo = undertow.getListenerInfo();
         for (int i = 0; i < listenerInfo.size(); i++) {
             Undertow.ListenerInfo p = listenerInfo.get(i);
-            logger.info("Listener : " + (i + 1) + Constants.SEPERATOR
-                    + "Address : " + p.getAddress().toString().replace('/', ' ').trim() + Constants.SEPERATOR
-                    + "Protocol : " + p.getProtcol());
+            logger.info(new StringBuilder().append("Listener : ")
+                    .append(i + 1).append(Constants.SEPERATOR).append("Address : ")
+                    .append(p.getAddress().toString().replace('/', ' ').trim())
+                    .append(Constants.SEPERATOR).append("Protocol : ").append(p.getProtcol()).toString());
         }
     }
 }

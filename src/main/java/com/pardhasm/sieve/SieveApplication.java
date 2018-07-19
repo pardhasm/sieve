@@ -36,16 +36,23 @@ public class SieveApplication {
         server = injector.getInstance(Server.class);
     }
 
-    private static void loadConfig(String path) throws IOException, URISyntaxException {
-        logger.info("Loading config from " + path);
-        BufferedReader reader = new BufferedReader(new FileReader(path));
+    private static void loadConfig(String path) throws URISyntaxException, IOException {
+        logger.info("Loading config from ".concat(path));
         StringBuilder stringBuilder = new StringBuilder();
-        char[] buffer = new char[10];
-        while (reader.read(buffer) != -1) {
-            stringBuilder.append(new String(buffer));
-            buffer = new char[10];
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(path));
+            char[] buffer = new char[10];
+            while (reader.read(buffer) != -1) {
+                stringBuilder.append(new String(buffer));
+                buffer = new char[10];
+            }
+        } catch (Exception e) {
+            if (reader != null) {
+                reader.close();
+            }
         }
-        reader.close();
+
         String config = stringBuilder.toString();
         configLoader.loadConfig(config);
         logger.info("Config successfully loaded...!");

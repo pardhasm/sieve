@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class CacheManagerImpl implements ICacheManager {
 
-    private final Cache<Pattern, APIDefinition> cache = Caffeine.newBuilder()
+    private final Cache<Pattern, ApiDefinition> cache = Caffeine.newBuilder()
             .expireAfterAccess(1000, TimeUnit.DAYS)
             .maximumSize(10_000).build();
 
@@ -18,18 +18,18 @@ public class CacheManagerImpl implements ICacheManager {
 
 
     @Override
-    public void put(Pattern key, APIDefinition value) {
+    public void put(Pattern key, ApiDefinition value) {
         patterns.add(key);
         cache.put(key,value);
     }
 
     @Override
-    public APIDefinition get(Pattern key){
+    public ApiDefinition get(Pattern key) {
         return cache.getIfPresent(key);
     }
 
     @Override
-    public APIDefinition get(String path){
+    public ApiDefinition get(String path) {
         for(Pattern pattern : patterns){
             if(pattern.matcher(path).matches()){
                 return get(pattern);

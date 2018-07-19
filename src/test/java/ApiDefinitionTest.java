@@ -1,4 +1,4 @@
-import com.pardhasm.sieve.APIDefinition;
+import com.pardhasm.sieve.ApiDefinition;
 import org.junit.Test;
 
 import java.net.URISyntaxException;
@@ -10,19 +10,18 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 
-
-public class APIDefinitionTest {
+public class ApiDefinitionTest {
 
     @Test
     public void testBuilderPattern() throws URISyntaxException {
-        ArrayList<APIDefinition.Target> targets = new ArrayList<>();
+        ArrayList<ApiDefinition.Target> targets = new ArrayList<>();
         HashMap<String, Object> map = new HashMap<>();
         map.put("host", "127.0.0.1");
         map.put("port", 8080);
         map.put("httpType", "http");
-        targets.add(new APIDefinition.Target(map));
+        targets.add(new ApiDefinition.Target(map));
 
-        APIDefinition build = new APIDefinition.Builder()
+        ApiDefinition build = new ApiDefinition.Builder()
                 .name("name")
                 .pattern("/pattern/:a")
                 .globalRateLimit(1)
@@ -43,7 +42,7 @@ public class APIDefinitionTest {
 
     @Test
     public void testBuilderName() throws URISyntaxException {
-        APIDefinition build = new APIDefinition.Builder()
+        ApiDefinition build = new ApiDefinition.Builder()
                 .name("name")
                 .pattern("pattern")
                 .globalRateLimit(1)
@@ -58,7 +57,7 @@ public class APIDefinitionTest {
 
     @Test
     public void testBuilderUL() throws URISyntaxException {
-        APIDefinition build = new APIDefinition.Builder()
+        ApiDefinition build = new ApiDefinition.Builder()
                 .name("name")
                 .pattern("pattern")
                 .globalRateLimit(1)
@@ -72,18 +71,18 @@ public class APIDefinitionTest {
 
     @Test
     public void testUtil() {
-        assertTrue(APIDefinition.removeSlashesAtBothEnds("/path").equalsIgnoreCase("path"));
-        assertTrue(APIDefinition.removeSlashesAtBothEnds("").equalsIgnoreCase(""));
-        assertTrue(APIDefinition.HttpType.HTTP.getValue().equalsIgnoreCase("http"));
-        assertTrue(APIDefinition.HttpType.HTTPS.getValue().equalsIgnoreCase("https"));
-        assertTrue(APIDefinition.removeSlashesAtBothEnds("/").equalsIgnoreCase(""));
-        assertTrue(APIDefinition.removeSlashesAtBothEnds("/a/").equalsIgnoreCase("a"));
+        assertTrue(ApiDefinition.removeSlashesAtBothEnds("/path").equalsIgnoreCase("path"));
+        assertTrue(ApiDefinition.removeSlashesAtBothEnds("").equalsIgnoreCase(""));
+        assertTrue(ApiDefinition.HttpType.HTTP.getValue().equalsIgnoreCase("http"));
+        assertTrue(ApiDefinition.HttpType.HTTPS.getValue().equalsIgnoreCase("https"));
+        assertTrue(ApiDefinition.removeSlashesAtBothEnds("/").equalsIgnoreCase(""));
+        assertTrue(ApiDefinition.removeSlashesAtBothEnds("/a/").equalsIgnoreCase("a"));
     }
 
 
     @Test
     public void testBuilderPrototype() throws URISyntaxException {
-        APIDefinition base = new APIDefinition.Builder()
+        ApiDefinition base = new ApiDefinition.Builder()
                 .name("name")
                 .pattern("pattern")
                 .globalRateLimit(1)
@@ -91,7 +90,7 @@ public class APIDefinitionTest {
                 .userRateLimit(1)
                 .userRateLimitUnit(TimeUnit.valueOf("SECONDS"))
                 .targets(new ArrayList<>()).build();
-        APIDefinition build = new APIDefinition.Builder().fromPrototype(base).build();
+        ApiDefinition build = new ApiDefinition.Builder().fromPrototype(base).build();
         assertNotNull(build.getPattern());
         assertNotNull(build.proxyHandler());
         assertNotNull(build.getTargets());
@@ -104,7 +103,7 @@ public class APIDefinitionTest {
     @Test
     public void testException() {
         try {
-            APIDefinition.checkNotNull(null);
+            ApiDefinition.checkNotNull(null);
         } catch (Exception e) {
             assertTrue(e instanceof NullPointerException);
         }

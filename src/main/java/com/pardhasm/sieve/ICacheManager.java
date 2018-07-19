@@ -3,9 +3,9 @@ package com.pardhasm.sieve;
 import java.util.regex.Pattern;
 
 public interface ICacheManager {
-    void put(Pattern key, APIDefinition value);
+    void put(Pattern key, ApiDefinition value);
 
-    APIDefinition get(Pattern key);
+    ApiDefinition get(Pattern key);
 
-    APIDefinition get(String path);
+    ApiDefinition get(String path);
 }

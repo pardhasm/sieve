@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 
-public class APIDefinition {
+public class ApiDefinition {
 
     private String name;
     private Pattern pattern;
@@ -23,7 +23,7 @@ public class APIDefinition {
     private LoadBalancingProxyClient loadBalancer;
     private ProxyHandler proxyHandler;
 
-    private APIDefinition(Builder builder) {
+    private ApiDefinition(Builder builder) {
         this.name = checkNotNull(builder.name);
         this.pattern = checkNotNull(builder.pattern);
         this.targets = checkNotNull(builder.targets);
@@ -113,8 +113,8 @@ public class APIDefinition {
 
         public Target(Map params) {
             this.httpType = HttpType.valueOf(String.valueOf(params.get("httpType")).toUpperCase());
-            this.host = String.valueOf(params.get("host"));
-            this.port = String.valueOf(params.get("port"));
+            this.host = String.valueOf(params.get("host")).trim();
+            this.port = String.valueOf(params.get("port")).trim();
         }
     }
 
@@ -179,7 +179,7 @@ public class APIDefinition {
             return this;
         }
 
-        public Builder fromPrototype(APIDefinition prototype) {
+        public Builder fromPrototype(ApiDefinition prototype) {
             name = prototype.name;
             pattern = prototype.pattern;
             targets = prototype.targets;
@@ -192,8 +192,8 @@ public class APIDefinition {
             return this;
         }
 
-        public APIDefinition build() {
-            return new APIDefinition(this);
+        public ApiDefinition build() {
+            return new ApiDefinition(this);
         }
 
         private LoadBalancingProxyClient configureLoadBalancer(List<Target> targets) throws URISyntaxException {
@@ -201,13 +201,11 @@ public class APIDefinition {
             loadBalancer.setConnectionsPerThread(20 * targets.size());
             for (Target target : targets) {
                 loadBalancer.addHost(
-                        new URI(new StringBuilder()
-                                .append(target.httpType)
-                                .append(Constants.ADDRESS)
-                                .append(target.host)
-                                .append(Constants.COLON)
-                                .append(target.port)
-                                .toString()));
+                        new URI(String.valueOf(target.httpType).toLowerCase() +
+                                Constants.ADDRESS +
+                                target.host +
+                                Constants.COLON +
+                                target.port));
             }
             return loadBalancer;
         }

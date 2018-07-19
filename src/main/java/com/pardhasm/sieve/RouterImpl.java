@@ -7,11 +7,11 @@ import io.undertow.util.Headers;
 public class RouterImpl implements IRouter {
 
     @Inject
-    ICacheManager cacheManager;
+    private ICacheManager cacheManager;
 
     @Override
     public void handle(HttpServerExchange exchange) throws Exception {
-        APIDefinition definition = cacheManager.get(exchange.getRequestPath());
+        ApiDefinition definition = cacheManager.get(exchange.getRequestPath());
         if(definition != null){
             definition.proxyHandler().handleRequest(exchange);
         }else{

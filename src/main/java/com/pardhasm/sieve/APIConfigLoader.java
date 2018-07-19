@@ -21,7 +21,11 @@ public enum APIConfigLoader {
         Server.INSTANCE.start();
     }
 
-    public void loadConfig() throws IOException, URISyntaxException {
+    public void loadConfig(String config) throws URISyntaxException {
+        parseAllConfig(JsonIterator.deserialize(config));
+    }
+
+    private void loadConfig() throws IOException, URISyntaxException {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         URL resource = classLoader.getResource(Constants.CONFIG_FOLDER);
         if (resource != null) {
@@ -31,12 +35,16 @@ public enum APIConfigLoader {
                 for (File file : files) {
                     String content = new String(Files.readAllBytes(file.toPath()));
                     Any config = JsonIterator.deserialize(content);
-                    for(Any conf : config.get("configs").asList()){
-                        APIDefinition apiDefinition = parseConfig(conf);
-                        CacheManager.INSTANCE.put(apiDefinition.getPattern(), apiDefinition);
-                    }
+                    parseAllConfig(config);
                 }
             }
+        }
+    }
+
+    private void parseAllConfig(Any config) throws URISyntaxException {
+        for (Any conf : config.get("configs").asList()) {
+            APIDefinition apiDefinition = parseConfig(conf);
+            CacheManager.INSTANCE.put(apiDefinition.getPattern(), apiDefinition);
         }
     }
 

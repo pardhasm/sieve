@@ -18,13 +18,6 @@ public class APIConfigLoader {
     @Inject
     ICacheManager cacheManager;
 
-    private Server server = new Server();
-
-
-    public void init() throws IOException, URISyntaxException {
-        loadConfig();
-    }
-
     public void loadConfig(String config) throws URISyntaxException {
         parseAllConfig(JsonIterator.deserialize(config));
     }

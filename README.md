@@ -1,2 +1,2 @@
 # sieve [![Build Status](https://travis-ci.org/pardhasm/sieve.svg?branch=master)](https://travis-ci.org/pardhasm/sieve) [![codecov](https://codecov.io/gh/pardhasm/sieve/branch/master/graph/badge.svg)](https://codecov.io/gh/pardhasm/sieve) [![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=com.pardhasm%3Asieve&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=com.pardhasm%3Asieve) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=com.pardhasm%3Asieve&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=com.pardhasm%3Asieve)
-Fastest API Gateway for JAVA
+A Lite & Fast API Gateway for JAVA

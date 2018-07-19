@@ -1,5 +1,6 @@
 package com.pardhasm.sieve;
 
+import com.google.inject.Inject;
 import com.jsoniter.JsonIterator;
 import com.jsoniter.any.Any;
 
@@ -12,13 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public enum APIConfigLoader {
-    INSTANCE;
+public class APIConfigLoader {
+
+    @Inject
+    ICacheManager cacheManager;
+
+    private Server server = new Server();
 
 
     public void init() throws IOException, URISyntaxException {
         loadConfig();
-        Server.INSTANCE.start();
     }
 
     public void loadConfig(String config) throws URISyntaxException {
@@ -44,7 +48,7 @@ public enum APIConfigLoader {
     private void parseAllConfig(Any config) throws URISyntaxException {
         for (Any conf : config.get("configs").asList()) {
             APIDefinition apiDefinition = parseConfig(conf);
-            CacheManager.INSTANCE.put(apiDefinition.getPattern(), apiDefinition);
+            cacheManager.put(apiDefinition.getPattern(), apiDefinition);
         }
     }
 

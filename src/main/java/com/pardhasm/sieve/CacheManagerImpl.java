@@ -8,8 +8,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-public enum CacheManager {
-    INSTANCE;
+public class CacheManagerImpl implements ICacheManager {
 
     private final Cache<Pattern, APIDefinition> cache = Caffeine.newBuilder()
             .expireAfterAccess(1000, TimeUnit.DAYS)
@@ -18,15 +17,18 @@ public enum CacheManager {
     private final Set<Pattern> patterns = new HashSet<>();
 
 
-    public void put(Pattern key,APIDefinition value) {
+    @Override
+    public void put(Pattern key, APIDefinition value) {
         patterns.add(key);
         cache.put(key,value);
     }
 
+    @Override
     public APIDefinition get(Pattern key){
         return cache.getIfPresent(key);
     }
 
+    @Override
     public APIDefinition get(String path){
         for(Pattern pattern : patterns){
             if(pattern.matcher(path).matches()){

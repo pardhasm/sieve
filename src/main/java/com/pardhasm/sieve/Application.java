@@ -1,5 +1,7 @@
 package com.pardhasm.sieve;
 
+import com.pardhasm.sieve.core.Sieve;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 

@@ -1,4 +1,6 @@
-package com.pardhasm.sieve;
+package com.pardhasm.sieve.core;
+
+import com.pardhasm.sieve.core.model.ApiDefinition;
 
 import java.util.regex.Pattern;
 

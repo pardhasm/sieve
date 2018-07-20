@@ -1,8 +1,10 @@
-package com.pardhasm.sieve;
+package com.pardhasm.sieve.core;
 
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.pardhasm.sieve.core.impl.ApiConfigLoaderImpl;
+import com.pardhasm.sieve.core.impl.UndertowServerImpl;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,7 +15,7 @@ import java.util.logging.Logger;
 
 public class Sieve {
     private Logger logger;
-    private ApiConfigLoader configLoader;
+    private IApiConfigLoader configLoader;
     private Server server;
 
     public void start(String[] args) throws IOException, URISyntaxException {
@@ -32,7 +34,7 @@ public class Sieve {
     private void loadClasses() {
         Injector injector = Guice.createInjector(new Binder());
         logger = injector.getInstance(Logger.class);
-        configLoader = injector.getInstance(ApiConfigLoader.class);
+        configLoader = injector.getInstance(ApiConfigLoaderImpl.class);
         server = injector.getInstance(UndertowServerImpl.class);
     }
 

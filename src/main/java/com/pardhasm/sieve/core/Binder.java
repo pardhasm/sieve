@@ -1,6 +1,8 @@
-package com.pardhasm.sieve;
+package com.pardhasm.sieve.core;
 
 import com.google.inject.AbstractModule;
+import com.pardhasm.sieve.core.impl.CacheManagerImpl;
+import com.pardhasm.sieve.core.impl.RouterImpl;
 
 public class Binder extends AbstractModule {
     @Override

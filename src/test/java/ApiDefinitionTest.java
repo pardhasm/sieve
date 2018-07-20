@@ -1,4 +1,4 @@
-import com.pardhasm.sieve.ApiDefinition;
+import com.pardhasm.sieve.core.model.ApiDefinition;
 import org.junit.Test;
 
 import java.net.URISyntaxException;

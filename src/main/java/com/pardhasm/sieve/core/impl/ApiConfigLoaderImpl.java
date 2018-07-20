@@ -1,23 +1,27 @@
-package com.pardhasm.sieve;
+package com.pardhasm.sieve.core.impl;
 
 import com.google.inject.Inject;
 import com.jsoniter.JsonIterator;
 import com.jsoniter.any.Any;
+import com.pardhasm.sieve.core.IApiConfigLoader;
+import com.pardhasm.sieve.core.ICacheManager;
+import com.pardhasm.sieve.core.model.ApiDefinition;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class ApiConfigLoader {
+public class ApiConfigLoaderImpl implements IApiConfigLoader {
 
     private ICacheManager cacheManager;
 
     @Inject
-    public ApiConfigLoader(ICacheManager cacheManager) {
+    public ApiConfigLoaderImpl(ICacheManager cacheManager) {
         this.cacheManager = cacheManager;
     }
 
+    @Override
     public void loadConfig(String config) throws URISyntaxException {
         parseAllConfig(JsonIterator.deserialize(config));
     }

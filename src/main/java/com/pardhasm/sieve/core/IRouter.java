@@ -1,4 +1,4 @@
-package com.pardhasm.sieve;
+package com.pardhasm.sieve.core;
 
 import io.undertow.server.HttpServerExchange;
 

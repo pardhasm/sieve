@@ -1,5 +1,6 @@
-package com.pardhasm.sieve;
+package com.pardhasm.sieve.core.model;
 
+import com.pardhasm.sieve.core.Constants;
 import io.undertow.server.handlers.proxy.LoadBalancingProxyClient;
 import io.undertow.server.handlers.proxy.ProxyHandler;
 

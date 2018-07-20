@@ -1,7 +1,9 @@
-package com.pardhasm.sieve;
+package com.pardhasm.sieve.core.impl;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.pardhasm.sieve.core.ICacheManager;
+import com.pardhasm.sieve.core.model.ApiDefinition;
 
 import java.util.HashSet;
 import java.util.Set;

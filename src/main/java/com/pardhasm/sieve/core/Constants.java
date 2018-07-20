@@ -1,4 +1,4 @@
-package com.pardhasm.sieve;
+package com.pardhasm.sieve.core;
 
 public final class Constants {
 

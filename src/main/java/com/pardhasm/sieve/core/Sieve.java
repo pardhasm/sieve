@@ -41,17 +41,12 @@ public class Sieve {
     private void loadConfig(String path) throws URISyntaxException, IOException {
         logger.info("Loading config from ".concat(path));
         StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(path));
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             char[] buffer = new char[10];
             while (reader.read(buffer) != -1) {
                 stringBuilder.append(new String(buffer));
                 buffer = new char[10];
-            }
-        } catch (Exception e) {
-            if (reader != null) {
-                reader.close();
             }
         }
 

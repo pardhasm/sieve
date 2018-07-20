@@ -11,32 +11,32 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
-public class SieveApplication {
-    private static Logger logger;
-    private static ApiConfigLoader configLoader;
-    private static Server server;
+public class Sieve {
+    private Logger logger;
+    private ApiConfigLoader configLoader;
+    private Server server;
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public void start(String[] args) throws IOException, URISyntaxException {
         loadClasses();
         loadConfig(validatePath(args));
         startServer();
     }
 
-    private static String validatePath(String[] args) {
+    private String validatePath(String[] args) {
         if (args == null || args.length == 0 || args[0].trim().isEmpty()) {
             throw new IllegalArgumentException("Config path is either null or empty : " + Arrays.toString(args));
         }
         return args[0];
     }
 
-    private static void loadClasses() {
+    private void loadClasses() {
         Injector injector = Guice.createInjector(new Binder());
         logger = injector.getInstance(Logger.class);
         configLoader = injector.getInstance(ApiConfigLoader.class);
-        server = injector.getInstance(Server.class);
+        server = injector.getInstance(UndertowServerImpl.class);
     }
 
-    private static void loadConfig(String path) throws URISyntaxException, IOException {
+    private void loadConfig(String path) throws URISyntaxException, IOException {
         logger.info("Loading config from ".concat(path));
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader reader = null;
@@ -58,7 +58,7 @@ public class SieveApplication {
         logger.info("Config successfully loaded...!");
     }
 
-    private static void startServer() {
+    private void startServer() {
         server.start();
     }
 

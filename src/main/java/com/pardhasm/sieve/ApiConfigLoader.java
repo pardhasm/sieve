@@ -11,8 +11,12 @@ import java.util.concurrent.TimeUnit;
 
 public class ApiConfigLoader {
 
-    @Inject
     private ICacheManager cacheManager;
+
+    @Inject
+    public ApiConfigLoader(ICacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+    }
 
     public void loadConfig(String config) throws URISyntaxException {
         parseAllConfig(JsonIterator.deserialize(config));

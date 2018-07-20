@@ -6,8 +6,13 @@ import io.undertow.util.Headers;
 
 public class RouterImpl implements IRouter {
 
-    @Inject
+
     private ICacheManager cacheManager;
+
+    @Inject
+    public RouterImpl(ICacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+    }
 
     @Override
     public void handle(HttpServerExchange exchange) throws Exception {

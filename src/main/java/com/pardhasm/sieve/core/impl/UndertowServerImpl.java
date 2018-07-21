@@ -5,6 +5,8 @@ import com.pardhasm.sieve.core.Constants;
 import com.pardhasm.sieve.core.IRouter;
 import com.pardhasm.sieve.core.Server;
 import io.undertow.Undertow;
+import io.undertow.server.HttpHandler;
+import io.undertow.server.HttpServerExchange;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -22,9 +24,21 @@ public class UndertowServerImpl implements Server {
 
     @Override
     public void start() {
-        Undertow undertow = Undertow.builder().addHttpListener(9090, "localhost")
-                .setHandler(exchange -> router.handle(exchange)).build();
+        Undertow undertow = Undertow.builder()
+                .setIoThreads(Constants.AVAILABLE_PROCESSORS * 2)
+                .setWorkerThreads(Constants.AVAILABLE_PROCESSORS * 16)
+                .addHttpListener(8080, "0.0.0.0")
+                .setHandler(new HttpHandler() {
+                    public void handleRequest(HttpServerExchange exchange) throws Exception {
+                        if (exchange.isInIoThread()) {
+                            exchange.dispatch(this);
+                            return;
+                        }
+                        router.handle(exchange);
+                    }
+                }).build();
         undertow.start();
+
         logger.info("Starting server");
         if (!undertow.getXnio().getName().isEmpty()) {
             logger.info("Server started");

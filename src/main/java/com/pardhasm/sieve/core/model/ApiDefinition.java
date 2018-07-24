@@ -16,23 +16,19 @@ public class ApiDefinition {
 
     private String name;
     private Pattern pattern;
-    private List<Target> targets;
     private Long globalRateLimit;
     private TimeUnit globalRateLimitUnit;
     private Long userRateLimit;
     private TimeUnit userRateLimitUnit;
-    private LoadBalancingProxyClient loadBalancer;
     private ProxyHandler proxyHandler;
 
     private ApiDefinition(Builder builder) {
         this.name = checkNotNull(builder.name);
         this.pattern = checkNotNull(builder.pattern);
-        this.targets = checkNotNull(builder.targets);
         this.globalRateLimit = checkNotNull(builder.globalRateLimit);
         this.globalRateLimitUnit = checkNotNull(builder.globalRateLimitUnit);
         this.userRateLimit = checkNotNull(builder.userRateLimit);
         this.userRateLimitUnit = checkNotNull(builder.userRateLimitUnit);
-        this.loadBalancer = checkNotNull(builder.loadBalancer);
         this.proxyHandler = checkNotNull(builder.build);
     }
 
@@ -72,10 +68,6 @@ public class ApiDefinition {
         return name;
     }
 
-    public List<Target> getTargets() {
-        return targets;
-    }
-
     public Long getGlobalRateLimit() {
         return globalRateLimit;
     }
@@ -93,19 +85,6 @@ public class ApiDefinition {
     }
 
 
-    public enum HttpType {
-        HTTP("http"), HTTPS("https");
-        private String value;
-
-        HttpType(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
-
     public static class Target {
         HttpType httpType;
         String host;
@@ -122,7 +101,6 @@ public class ApiDefinition {
     public static class Builder {
         private String name;
         private Pattern pattern;
-        private List<Target> targets;
         private Long globalRateLimit;
         private TimeUnit globalRateLimitUnit;
         private Long userRateLimit;
@@ -154,9 +132,8 @@ public class ApiDefinition {
             return java.util.regex.Pattern.compile(sb.toString());
         }
 
-        public Builder targets(List<Target> targets) throws URISyntaxException {
-            this.targets = targets;
-            this.build = ProxyHandler.builder().setProxyClient(configureLoadBalancer(targets)).setMaxRequestTime(30000).build();
+        public Builder loadBalancer(List<EndPointDefinition> endPointDefinitions) throws URISyntaxException {
+            this.build = ProxyHandler.builder().setProxyClient(configureLoadBalancer(endPointDefinitions)).setMaxRequestTime(30000).build();
             return this;
         }
 
@@ -183,12 +160,10 @@ public class ApiDefinition {
         public Builder fromPrototype(ApiDefinition prototype) {
             name = prototype.name;
             pattern = prototype.pattern;
-            targets = prototype.targets;
             globalRateLimit = prototype.globalRateLimit;
             globalRateLimitUnit = prototype.globalRateLimitUnit;
             userRateLimit = prototype.userRateLimit;
             userRateLimitUnit = prototype.userRateLimitUnit;
-            loadBalancer = prototype.loadBalancer;
             build = prototype.proxyHandler;
             return this;
         }
@@ -197,16 +172,15 @@ public class ApiDefinition {
             return new ApiDefinition(this);
         }
 
-        private LoadBalancingProxyClient configureLoadBalancer(List<Target> targets) throws URISyntaxException {
+        private LoadBalancingProxyClient configureLoadBalancer(List<EndPointDefinition> endPointDefinitions) throws URISyntaxException {
             loadBalancer = new LoadBalancingProxyClient();
-            loadBalancer.setConnectionsPerThread(20 * targets.size());
-            for (Target target : targets) {
+            for (EndPointDefinition endPointDefinition : endPointDefinitions) {
                 loadBalancer.addHost(
-                        new URI(String.valueOf(target.httpType).toLowerCase() +
+                        new URI(String.valueOf(endPointDefinition.getHttpType()).toLowerCase() +
                                 Constants.ADDRESS +
-                                target.host +
+                                endPointDefinition.getHost() +
                                 Constants.COLON +
-                                target.port));
+                                endPointDefinition.getPort()));
             }
             return loadBalancer;
         }

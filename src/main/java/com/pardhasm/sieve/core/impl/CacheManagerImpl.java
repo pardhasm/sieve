@@ -4,6 +4,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.pardhasm.sieve.core.ICacheManager;
 import com.pardhasm.sieve.core.model.ApiDefinition;
+import com.pardhasm.sieve.core.model.EndPointDefinition;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +13,11 @@ import java.util.regex.Pattern;
 
 public class CacheManagerImpl implements ICacheManager {
 
-    private final Cache<Pattern, ApiDefinition> cache = Caffeine.newBuilder()
+    private final Cache<Pattern, ApiDefinition> apiDefinitionCache = Caffeine.newBuilder()
+            .expireAfterAccess(1000, TimeUnit.DAYS)
+            .maximumSize(10_000).build();
+
+    private final Cache<String, EndPointDefinition> endPointDefinitionCache = Caffeine.newBuilder()
             .expireAfterAccess(1000, TimeUnit.DAYS)
             .maximumSize(10_000).build();
 
@@ -22,12 +27,11 @@ public class CacheManagerImpl implements ICacheManager {
     @Override
     public void put(Pattern key, ApiDefinition value) {
         patterns.add(key);
-        cache.put(key,value);
+        apiDefinitionCache.put(key, value);
     }
 
-    @Override
     public ApiDefinition get(Pattern key) {
-        return cache.getIfPresent(key);
+        return apiDefinitionCache.getIfPresent(key);
     }
 
     @Override
@@ -38,5 +42,15 @@ public class CacheManagerImpl implements ICacheManager {
             }
         }
         return null;
+    }
+
+    @Override
+    public void put(String name, EndPointDefinition endPoint) {
+        endPointDefinitionCache.put(name, endPoint);
+    }
+
+    @Override
+    public EndPointDefinition getEndpoints(String name) {
+        return endPointDefinitionCache.getIfPresent(name);
     }
 }

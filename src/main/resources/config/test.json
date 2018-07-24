@@ -1,31 +1,47 @@
 {
   "configs": [
     {
-      "name": "Test Endpoint 1",
-      "pattern": "/test/:path",
-      "whiteListEnabled": false,
-      "roundRobinEnabled": true,
-      "targets": [
+      "name": "Test app",
+      "endpoints": [
         {
+          "name": "end point 1",
           "host": "127.0.0.1",
           "port": 9081,
-          "httpType": "http"
+          "httpType": "http",
+          "maxThroughput": -1
         },
         {
+          "name": "end point 2",
           "host": "127.0.0.1",
           "port": 9082,
-          "httpType": "http"
+          "httpType": "http",
+          "maxThroughput": -1
         },
         {
+          "name": "end point 3",
           "host": "127.0.0.1",
           "port": 9083,
-          "httpType": "http"
+          "httpType": "http",
+          "maxThroughput": -1
         }
       ],
-      "globalRateLimit": 10,
-      "globalRateLimitUnit": "SECONDS",
-      "userRateLimit": 10,
-      "userRateLimitUnit": "SECONDS"
+      "apiList": [
+        {
+          "name": "Test Endpoint 1",
+          "pattern": "/test/:path",
+          "whiteListEnabled": false,
+          "roundRobinEnabled": true,
+          "targets": [
+            "end point 1",
+            "end point 2",
+            "end point 3"
+          ],
+          "globalRateLimit": 10,
+          "globalRateLimitUnit": "SECONDS",
+          "userRateLimit": 10,
+          "userRateLimitUnit": "SECONDS"
+        }
+      ]
     }
   ]
 }
